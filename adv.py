@@ -162,6 +162,7 @@ while isFilled() == False:
             good_rooms.push(current_room)
 
     connected_exits = {}
+
     # Assign directions with the amount of exits in the rooms
     if 's' in available_paths:
         temp_direction = 's'
@@ -184,7 +185,8 @@ while isFilled() == False:
         connected_exits[temp_direction] = len(player.current_room.get_exits())
         player.travel(opp_dir[temp_direction])
 
-    # If there are more than 1 conne
+    # If there are more than 1 connected paths, and one of those paths
+    # has only one exit, go that way first
     if len(connected_exits) > 1 and 1 in connected_exits.values():
         min_direction = ''
         min_exits = 10
@@ -195,10 +197,10 @@ while isFilled() == False:
 
         direction = min_direction
     else:
-        if 's' in available_paths:
-            direction = 's'
-        elif 'w' in available_paths:
+        if 'w' in available_paths:
             direction = 'w'
+        elif 's' in available_paths:
+            direction = 's'
         elif 'n' in available_paths:
             direction = 'n'
         elif 'e' in available_paths:
@@ -218,8 +220,6 @@ while isFilled() == False:
     traversal_graph[current_room][direction] = player.current_room.id
     traversal_graph[player.current_room.id][opp_dir[direction]] = current_room
     
-
-
 
 
 
